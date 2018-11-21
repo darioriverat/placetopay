@@ -5,7 +5,7 @@ return [
         'routes' => [
         	'App' => [
         		'module' => 'App',
-        		'controller' => 'Dashboard',
+        		'controller' => 'Pagos',
         		'view' => 'index'
         	]
         ],

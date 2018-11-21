@@ -14,15 +14,15 @@ return [
             */
             'defaults' => [
                 'module' => 'App',
-                'controller' => 'Dashboard',
+                'controller' => 'Pagos',
                 'view' => 'index'
             ],
             # Zend\Router\Http routes
             'myroute' => Zend\Router\Http\Literal::factory([
-                'route' => '/example',
+                'route' => '/pagospse',
                 'defaults' => [
-                    'controller' => 'App\Controller\Matched',
-                    'action' => 'doIt',
+                    'controller' => 'App\Controller\Pagos',
+                    'action' => 'index',
                 ],
             ])
         ],

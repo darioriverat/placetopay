@@ -1,0 +1,101 @@
+<?php $this->setTitle("Pagos PSE") ?>
+
+<h2>Pago en línea PSE</h2>
+
+<form action="">
+    <fieldset>
+        <legend>Información personal</legend>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="documentType">Tipo de documento</label>
+                <select id="documentType" name="documentType" class="form-control">
+                    <option selected>Seleccione ...</option>
+                    <option value="CC">Cédula de ciudanía</option>
+                    <option value="CE"> Cédula de extranjería</option>
+                    <option value="TI">Tarjeta de identidad</option>
+                    <option value="PPN">Pasaporte</option>
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="document">Número de identificación</label>
+                <input type="text" class="form-control" id="document" name="document" maxlength="12" />
+            </div>
+            <div class="form-group col-md-3">
+                <label for="firstName">Primer nombre</label>
+                <input type="text" class="form-control" id="firstName" name="firstName" maxlength="60" />
+            </div>
+            <div class="form-group col-md-3">
+                <label for="lastName">Segundo nombre</label>
+                <input type="text" class="form-control" id="lastName" name="lastName" maxlength="60" />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-8">
+                <label for="company">Empresa en la que labora</label>
+                <input type="text" class="form-control" id="company" name="company" maxlength="60" />
+            </div>
+            <div class="form-group col-md-4">
+                <label for="emailAddress">Correo electrónico</label>
+                <input type="text" class="form-control" id="emailAddress" name="emailAddress" maxlength="80" />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-12">
+                <label for="address">Dirección</label>
+                <input type="text" class="form-control" id="address" name="address" maxlength="100" />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="country">País</label>
+                <select id="country" name="country" class="form-control">
+                    <option value="CO">Colombia</option>
+                </select>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="province">Provincia</label>
+                <select id="province" name="province" class="form-control">
+                    <option value="Antioquia">Antioquia</option>
+                </select>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="city">Ciudad</label>
+                <select id="city" name="city" class="form-control">
+                    <option value="Medellín">Medellín</option>
+                    <option value="Bello">Bello</option>
+                    <option value="Sabaneta">Sabaneta</option>
+                    <option value="Salgar">Salgar</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="phone">Número de teléfono fijo</label>
+                <input type="text" class="form-control" id="phone" name="phone" maxlength="30" />
+            </div>
+            <div class="form-group col-md-4">
+                <label for="mobile">Número de teléfono móvil</label>
+                <input type="text" class="form-control" id="mobile" name="mobile" maxlength="30" />
+            </div>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>Información de facturación</legend>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="bankInterface">Tipo de cliente</label>
+                <select id="bankInterface" name="bankInterface" class="form-control">
+                    <option value="0" selected>Persona</option>
+                    <option value="1">Empresa</option>
+                </select>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="bankCode">Entidad financiera</label>
+                <select id="bankCode" name="bankCode" class="form-control">
+                    <option selected>Seleccione ...</option>
+                </select>
+            </div>
+        </div>
+    </fieldset>
+    <button type="submit" class="btn btn-primary">Confirmar pago</button>
+</form>
