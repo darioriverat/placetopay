@@ -50,10 +50,10 @@ case 0:
 <script>
 
     /*
-     * Realiza la llamada cíclica para verificar el estado de la transacción cada 7min si el estado es distinto de PENDING
+     * Realiza la llamada cíclica para verificar el estado de la transacción cada 7min si el estado es PENDING
      */
 
-    <?php if ($tran->responseCode !== 3): ?>
+    <?php if ($tran->responseCode == 3): ?>
 
         $(function(){
 
