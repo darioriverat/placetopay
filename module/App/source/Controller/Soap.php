@@ -9,7 +9,7 @@ use Drone\Mvc\AbstractionController;
 class Soap extends AbstractionController
 {
     /**
-     * Identificador habilitado para el consumo del API, entregado por Place to Pay
+     * Instancia de Authentication
      *
      * @var Authentication
      */
