@@ -368,4 +368,38 @@ class Pagos extends AbstractionController
 
         return $data;
     }
+
+    /**
+     * Muestra la lista de transacciones realizadas
+     *
+     * @return array
+     */
+    public function listaTransacciones()
+    {
+        # datos para enviar a la vista
+        $data = [];
+
+        try {
+
+            $rowset = $this->getPSETransactionResponseAdapter()->select([]);
+            $data["transacciones"] = $rowset;
+        }
+        catch (\Exception $e)
+        {
+            $data["code"]    = $e->getCode();
+            $data["message"] = $e->getMessage();
+            $data["process"] = "warning";
+
+            # verifica el etorno de la app, si está en modo dev o producción
+            $config = include 'config/application.config.php';
+            $data["dev_mode"] = $config["environment"]["dev_mode"];
+
+            # redirección a la vista de errores
+            $this->setMethod('error');
+
+            return $data;
+        }
+
+        return $data;
+    }
 }

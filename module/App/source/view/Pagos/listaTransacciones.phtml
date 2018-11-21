@@ -1,0 +1,140 @@
+<?php $this->setTitle("Confirmación transacción PSE") ?>
+
+<h2>Lista de transacciones</h2><br />
+
+<?php $transacciones = $this->param('transacciones'); ?>
+
+<?php if (count($transacciones)): ?>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>transactionID</th>
+                <th>sessionID</th>
+                <th>returnCode</th>
+                <th>response</th>
+                <th>responseReasonText</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($transacciones as $tran): ?>
+            <tr>
+                <td><?= $tran->transactionID ?></td>
+                <td><?= $tran->sessionID ?></td>
+                <td><?= $tran->returnCode ?></td>
+                <td>
+                    <?php
+                        switch ($tran->responseCode):
+case 0:
+                                echo "FAILED";
+                                break;
+                            case 1:
+                                echo "APPROVED";
+                                break;
+                            case 2:
+                                echo "DECLINED";
+                                break;
+                            case 3:
+                                echo "PENDING";
+                                break;
+                        endswitch;
+                    ?>
+                </td>
+                <td><?= $tran->responseReasonText ?></td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+
+    <div class="alert alert-info" role="alert">
+        <i class="fas fa-check"></i> &nbsp;Si su transacción aún se encuenta en estado pendiente debe esperar la aprobación del banco.
+        Por favor mantenga esta página abierta hasta que el banco de respuesta de la transacción.
+    </div>
+
+    <script>
+
+        /*
+         * Realiza la llamada cíclica para verificar el estado de la transacción cada 7min si el estado es distinto de PENDING
+         */
+        <?php foreach ($transacciones as $tran): ?>
+
+            <?php if ($tran->responseCode !== 3): ?>
+
+                $(function(){
+
+                    $.ajax({
+                        url: '<?= $this->basePath() ?>/App/Soap/consultaTransaccion/transactionID/<?= $tran->transactionID ?>',
+                        type: 'get',
+                        dataType: 'json',
+                        success: function(transaction)
+                        {
+                            if (transaction.error == undefined)
+                            {
+                                // refresca la página si se detectó cambio en el estado de la transacción
+                                if (transaction.changed == true)
+                                    location.reload();
+
+                                // si ya no está pendiente se cierra el ciclo de consulta
+                                if (transaction.responseCode != 3)
+                                    clearInterval(int);
+                            }
+                            else
+                            {
+                                console.info(transaction.error);
+                            }
+                        },
+                        error: function(jqXHR, textStatus, errorThrown)
+                        {
+                            console.info(errorThrown);
+                        }
+                    });
+
+                    // intervalo de consulta de la transacción
+                    var time = 7000;
+
+                    var int = setInterval(function(){
+
+                        $.ajax({
+                            url: '<?= $this->basePath() ?>/App/Soap/consultaTransaccion/transactionID/<?= $tran->transactionID ?>',
+                            type: 'get',
+                            dataType: 'json',
+                            success: function(transaction)
+                            {
+                                if (transaction.error == undefined)
+                                {
+                                    // refresca la página si se detectó cambio en el estado de la transacción
+                                    if (transaction.changed == true)
+                                        location.reload();
+
+                                    // si ya no está pendiente se cierra el ciclo de consulta
+                                    if (transaction.responseCode != 3)
+                                        clearInterval(int);
+                                }
+                                else
+                                {
+                                    console.info(transaction.error);
+                                }
+                            },
+                            error: function(jqXHR, textStatus, errorThrown)
+                            {
+                                console.info(errorThrown);
+                            }
+                        });
+
+                    }, time);
+
+                });
+
+            <?php endif; ?>
+
+        <?php endforeach; ?>
+
+    </script>
+
+<?php else: ?>
+
+    <div class="alert alert-warning" role="alert">
+        <i class="fas fa-check"></i> &nbsp;Ninguna transacción registrada
+    </div>
+
+<?php endif; ?>

@@ -48,39 +48,14 @@ case 0:
 </div>
 
 <script>
-    $(function(){
 
-        $.ajax({
-            url: '<?= $this->basePath() ?>/App/Soap/consultaTransaccion/transactionID/<?= $tran->transactionID ?>',
-            type: 'get',
-            dataType: 'json',
-            success: function(transaction)
-            {
-                if (transaction.error == undefined)
-                {
-                    // refresca la página si se detectó cambio en el estado de la transacción
-                    if (transaction.changed == true)
-                        location.reload();
+    /*
+     * Realiza la llamada cíclica para verificar el estado de la transacción cada 7min si el estado es distinto de PENDING
+     */
 
-                    // si ya no está pendiente se cierra el ciclo de consulta
-                    if (transaction.responseCode != 3)
-                        clearInterval(int);
-                }
-                else
-                {
-                    console.info(transaction.error);
-                }
-            },
-            error: function(jqXHR, textStatus, errorThrown)
-            {
-                console.info(errorThrown);
-            }
-        });
+    <?php if ($tran->responseCode !== 3): ?>
 
-        // intervalo de consulta de la transacción
-        var time = 7000;
-
-        var int = setInterval(function(){
+        $(function(){
 
             $.ajax({
                 url: '<?= $this->basePath() ?>/App/Soap/consultaTransaccion/transactionID/<?= $tran->transactionID ?>',
@@ -109,7 +84,41 @@ case 0:
                 }
             });
 
-        }, time);
+            // intervalo de consulta de la transacción
+            var time = 7000;
 
-    });
+            var int = setInterval(function(){
+
+                $.ajax({
+                    url: '<?= $this->basePath() ?>/App/Soap/consultaTransaccion/transactionID/<?= $tran->transactionID ?>',
+                    type: 'get',
+                    dataType: 'json',
+                    success: function(transaction)
+                    {
+                        if (transaction.error == undefined)
+                        {
+                            // refresca la página si se detectó cambio en el estado de la transacción
+                            if (transaction.changed == true)
+                                location.reload();
+
+                            // si ya no está pendiente se cierra el ciclo de consulta
+                            if (transaction.responseCode != 3)
+                                clearInterval(int);
+                        }
+                        else
+                        {
+                            console.info(transaction.error);
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
+                        console.info(errorThrown);
+                    }
+                });
+
+            }, time);
+
+        });
+
+    <?php endif; ?>
 </script>

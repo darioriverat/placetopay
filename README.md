@@ -2,7 +2,7 @@
 
 ## Instalación
 
-Asegúrese que las siguientes extensiones están habilitadas en el php.ini
+Asegúrese que las siguientes extensiones están habilitadas en el archivo de configuración `php.ini`.
 
 - intl
 - soap
@@ -38,6 +38,16 @@ CREATE TABLE PSETransactionResponse
 	responseReasonText   VARCHAR(255)    NULL
 );
 ```
+
+Finalmente asigne los permisos necesarios a la carpeta cache para que el usuario apache pueda escribir en ella.
+
+```bash
+chown apache cache
+```
+
+## Configuración
+
+- Los datos de conexión de la base de datos se encuentran en el archivo `config/database.config.php`. Por defecto el usuario de la base de datos es root y la contraseña vacía.
 
 ## Test
 

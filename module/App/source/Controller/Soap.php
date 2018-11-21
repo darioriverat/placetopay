@@ -41,9 +41,20 @@ class Soap extends AbstractionController
 
         try {
 
-            $soap = new SoapDriver();
-            $result = $soap->call("getBankList");
-            $result = $result->getBankListResult->item;
+            # verificar cache
+            $bankList = json_decode(file_get_contents("cache/bankList.json"));
+            $cachedKey = date("Ymd");
+
+            if (!property_exists($bankList, $cachedKey))
+            {
+                $soap = new SoapDriver();
+                $result = $soap->call("getBankList");
+                $result = $result->getBankListResult->item;
+
+                file_put_contents("cache/bankList.json", json_encode([$cachedKey => $result]));
+            }
+            else
+                $result = $bankList->$cachedKey;
 
             echo json_encode($result);
         }
@@ -106,5 +117,4 @@ class Soap extends AbstractionController
 
         return [];
     }
-
 }
