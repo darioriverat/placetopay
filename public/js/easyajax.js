@@ -291,7 +291,7 @@ $(function(){
         var _width = $(this).attr('data-width');
         var _overlay = $(this).attr('data-overlay');
 
-        var _type = $(this).attr('data-type');
+        var _type = $(this).attr('method');
         var _data = $(this).attr('data-object');
 
         _width = (_width == "small") ? "modal-sm" : _width;
@@ -299,11 +299,11 @@ $(function(){
 
         if (!$('#'+_id).length)
             $("body").append("<div id='" + _id + "' class='modal fade' tabindex='-1' role='dialog'>" +
-                                "<div class='modal-dialog " + _width + "'>" +
+                                "<div class='modal-dialog " + _width + "' role='document'>" +
                                     "<div class='modal-content'>" +
                                       "<div class='modal-header'>" +
+                                        "<h5 class='modal-title'>" + _title + "</h5>" +
                                         "<button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>" +
-                                        "<h4 class='modal-title'>" + _title + "</h4>" +
                                       "</div>" +
                                       "<div class='modal-body'>" +
                                         "<p>Cargando...</p>" +

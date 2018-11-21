@@ -1,0 +1,50 @@
+<?php if ($this->param("process") == "success"): ?>
+
+    <div class="alert alert-success" role="alert">
+        <i class="fas fa-check"></i> &nbsp;Transacción preaprobada. Será redireccionado al banco en
+        <span id="timer" class="text-success text-huge" style="font-size: 3rem">-</span>
+    </div>
+
+    <script>
+        var num = 3;
+
+        var int = setInterval(function(){
+
+            if (num == 0)
+                $("#timer").text('...');
+
+            else
+                $("#timer").text(num.toString());
+
+            num--;
+
+            if (num < 0)
+                clearInterval(int);
+        }, 1000);
+
+        setTimeout(function(){
+            window.location = '<?= $this->param('bankURL') ?>';
+        }, num * 1000);
+    </script>
+
+<?php elseif ($this->param("process") == "warning"): ?>
+
+    <div class="alert alert-warning" role="alert">
+        <i class="fas fa-exclamation"></i> &nbsp;<?= $this->param("message") ?>
+    </div>
+
+    <?php if ($this->isParam("messages") && count($this->param("messages"))): ?>
+        <?php foreach($this->param("messages") as $input => $messages): ?>
+            <?php $lbl = $this->param("validator")->getOption($input, "label"); ?>
+
+                <h5><strong><?= $lbl ?></strong></h5>
+                <ol>
+                    <?php foreach($messages as $code => $message): ?>
+                        <li><?= $message ?></li>
+                    <?php endforeach; ?>
+                </ol>
+
+        <?php endforeach; ?>
+    <?php endif; ?>
+
+<?php endif; ?>

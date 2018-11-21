@@ -43,11 +43,25 @@ class SoapDriver
      * Ejecuta la llamada a la función con la autenticación
      *
      * @param string $method
+     * @param mixed  $arg
      *
      * @return string
      */
-    public function call($method)
+    public function call($method, $arg = null)
     {
-        return $this->soap->{$method}(["auth" => $this->auth]);
+        switch ($method)
+        {
+            case 'getBankList':
+                return $this->soap->{$method}(["auth" => $this->auth]);
+                break;
+
+            case 'createTransaction':
+                return $this->soap->{$method}(["auth" => $this->auth, "transaction" => $arg]);
+                break;
+
+            case 'getTransactionInformation':
+                return $this->soap->{$method}(["auth" => $this->auth, "transactionID" => $arg]);
+                break;
+        }
     }
 }

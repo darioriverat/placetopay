@@ -1,12 +1,12 @@
 <?php
 
 return [
-	'default' => [
-		'dbhost' => 'localhost',
-		'dbuser' => 'root',
-		'dbpass' => '',
-		'dbname' => 'mysql',
-		'driver' => 'Mysqli',
-		'charset' => 'utf8',
-	],
+    'default' => [
+        'dbhost' => 'localhost',
+        'dbuser' => 'root',
+        'dbpass' => '',
+        'dbname' => 'placetopay',
+        'driver' => 'Mysqli',
+        'charset' => 'utf8',
+    ],
 ];
