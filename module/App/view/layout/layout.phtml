@@ -15,6 +15,12 @@
 
 	<link rel="stylesheet" type="text/css" href="<?= $this->basePath(); ?>/public/css/bootstrap.min.css" />
 
+	<script src="<?= $this->basePath(); ?>/public/js/jquery-3.3.1.min.js"></script>
+	<script src="<?= $this->basePath(); ?>/public/js/popper-1.12.9.min.js"></script>
+	<script src="<?= $this->basePath(); ?>/public/js/bootstrap.min.js"></script>
+
+	<script src="<?= $this->basePath(); ?>/public/js/easyajax.js"></script>
+
 	<style>
 		/*
 		 * For more straightforward sizing in CSS, we switch the global box-sizing value from content-box to border-box.
@@ -108,12 +114,6 @@
 	<div class="container">
 		<?= $this->content() ?>
 	</div>
-
-	<script src="<?= $this->basePath(); ?>/public/js/jquery-3.3.1.slim.min.js"></script>
-	<script src="<?= $this->basePath(); ?>/public/js/popper-1.12.9.min.js"></script>
-	<script src="<?= $this->basePath(); ?>/public/js/bootstrap.min.js"></script>
-
-	<script src="<?= $this->basePath(); ?>/public/js/easyajax.js"></script>
 
 	<!-- update page title -->
 	<?php if ($this->getTitle() !== $_title): ?>

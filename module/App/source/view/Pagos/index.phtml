@@ -2,7 +2,9 @@
 
 <h2>Pago en línea PSE</h2>
 
-<form action="">
+<div id="failureMessage"></div>
+
+<form action="" id="frmPagos">
     <fieldset>
         <legend>Información personal</legend>
         <div class="form-row">
@@ -99,3 +101,51 @@
     </fieldset>
     <button type="submit" class="btn btn-primary">Confirmar pago</button>
 </form>
+
+<script>
+    $(function(){
+        $.ajax({
+            url: '<?= $this->basePath() ?>/App/Soap/listaBancos',
+            type: 'get',
+            dataType: 'json',
+            beforeSend: function()
+            {
+                $("#bankCode").html("<option>Cargando...</option>");
+
+                var form = $("#frmPagos");
+                form.find("input").attr("readonly", "readonly");
+                form.find("select").attr("readonly", "readonly");
+                form.find("button[type='submit']").attr("disabled", "disabled");
+            },
+            success: function(banks)
+            {
+                if (banks.error == undefined  && banks.length)
+                {
+                    var list = "";
+
+                    for (var i = 0; i <= banks.length - 1; i++)
+                        list += "<option value='" + banks[i].bankCode + "'>" + banks[i].bankName + "</option>";
+
+                    $("#bankCode").html(list);
+
+	                var form = $("#frmPagos");
+                    form.find("input").removeAttr("readonly");
+                    form.find("select").removeAttr("readonly");
+                    form.find("button[type='submit']").removeAttr("disabled");
+
+                    $("#documentType").focus();
+                }
+                else
+                {
+                	$("#failureMessage").html("<br /><div class='alert alert-danger' role='alert'>No se pudo obtener la lista de Entidades Financieras, por favor intente más tarde</div>");
+                	$("#bankCode").html("<option>Ningún banco en lista</option>");
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown)
+            {
+            	$("#failureMessage").html("<br /><div class='alert alert-danger' role='alert'>No se pudo obtener la lista de Entidades Financieras, por favor intente más tarde</div>");
+                $("#bankCode").html("<option>Ningún banco en lista</option>");
+            }
+        })
+    });
+</script>
