@@ -402,4 +402,17 @@ class Pagos extends AbstractionController
 
         return $data;
     }
+
+    /**
+     * Método para liberar el controlador de la ejecución inicial (initExecution == true)
+     * Es útil para la ejecución de pruebas unitarias con PHPUnit, ya que por defecto el
+     * framework envía la ejecución del método por defecto.
+     *
+     * @return array
+     */
+    public function free()
+    {
+        $this->setTerminal(true);
+        return [];
+    }
 }

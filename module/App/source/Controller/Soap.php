@@ -31,7 +31,8 @@ class Soap extends AbstractionController
     }
 
     /**
-     * Imprime la lista de bancos del web service en JSON
+     * Imprime la lista de bancos del web service en JSON, si ya se consulta el mismo día
+     * obtiene la lista de la cache
      *
      * @return array
      */
@@ -124,6 +125,8 @@ class Soap extends AbstractionController
 
     /**
      * Método para liberar el controlador de la ejecución inicial (initExecution == true)
+     * Es útil para la ejecución de pruebas unitarias con PHPUnit, ya que por defecto el
+     * framework envía la ejecución del método por defecto.
      *
      * @return array
      */
