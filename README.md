@@ -4,6 +4,9 @@
 
 # Implementación SOAP Service
 
+Implementación de pago PSE con soap de PlacetoPay. Una copia de esta implementación ha sido subida al siguiente servidor a modo de demostración
+http://darioriverat.com/placetopay/
+
 ## Instalación
 
 Asegúrese que las siguientes extensiones están habilitadas en el archivo de configuración `php.ini`.
