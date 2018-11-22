@@ -90,32 +90,34 @@ class Soap extends AbstractionController
                 "transactionID" => $_GET["transactionID"]
             ]);
 
-            if (!count($rowset))
-                throw new \Exception("Error al recuperar la transacción");
-
-            $localTran = array_shift($rowset);
-
             $changed = false;
 
-            if ($localTran->responseCode !== $tranRes->responseCode)
+            if (count($rowset))
             {
-                $localTran->exchangeArray([
-                    "responseCode"       => $tranRes->responseCode,
-                    "responseReasonText" => $tranRes->responseReasonText
-                ]);
+                $localTran = array_shift($rowset);
 
-                $this->getPSETransactionResponseAdapter()->update($localTran, ["uniqueRequestId" => $localTran->uniqueRequestId]);
-                $changed = true;
+                if ($localTran->responseCode !== $tranRes->responseCode)
+                {
+                    $localTran->exchangeArray([
+                        "responseCode"       => $tranRes->responseCode,
+                        "responseReasonText" => $tranRes->responseReasonText
+                    ]);
+
+                    $this->getPSETransactionResponseAdapter()->update($localTran, ["uniqueRequestId" => $localTran->uniqueRequestId]);
+                    $changed = true;
+                }
             }
 
-            $result->changed = $changed;
+            $result->getTransactionInformationResult->changed = $changed;
 
-            $json = json_encode($result);
+            $json = json_encode($result->getTransactionInformationResult);
         }
         catch (\Exception $e)
         {
             $json = json_encode(["error" => $e->getMessage()]);
         }
+
+        echo $json;
 
         return ["json" => $json];
     }
