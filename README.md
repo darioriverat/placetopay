@@ -1,3 +1,7 @@
+<p align="left">
+<a href="https://travis-ci.org/Pleets/DronePHP"><img src="https://travis-ci.org/fermius/placetopay.svg?branch=master" alt="Build Status"></a>
+</p>
+
 # Implementación SOAP Service
 
 ## Instalación
@@ -51,6 +55,14 @@ chown apache cache
 
 ## Test
 
+La aplicación ha sido probada en las siguientes versiones de PHP
+
+5.6, 7, 7.1, 7.2
+
+Para ver el último resultado de pruebas unitarias visite el siguiente enlace
+
+https://travis-ci.org/fermius/placetopay
+
 Formulario de pagos PSE
 
 /App/Pagos/index
@@ -58,3 +70,7 @@ Formulario de pagos PSE
 Lista de bancos
 
 /App/Soap/listaBancos
+
+Lista de transacciones
+
+/App/Pagos/listaTransacciones
