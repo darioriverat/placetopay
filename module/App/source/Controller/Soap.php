@@ -56,14 +56,16 @@ class Soap extends AbstractionController
             else
                 $result = $bankList->$cachedKey;
 
-            echo json_encode($result);
+            $json = json_encode($result);
         }
         catch (\Exception $e)
         {
-            echo json_encode(["error" => $e->getMessage()]);
+            $json = json_encode(["error" => $e->getMessage()]);
         }
 
-        return [];
+        echo $json;
+
+        return ["json" => $json];
     }
 
     /**
@@ -108,13 +110,24 @@ class Soap extends AbstractionController
 
             $result->changed = $changed;
 
-            echo json_encode($result);
+            $json = json_encode($result);
         }
         catch (\Exception $e)
         {
-            echo json_encode(["error" => $e->getMessage()]);
+            $json = json_encode(["error" => $e->getMessage()]);
         }
 
+        return ["json" => $json];
+    }
+
+    /**
+     * Método para liberar el controlador de la ejecución inicial (initExecution == true)
+     *
+     * @return array
+     */
+    public function free()
+    {
+        $this->setTerminal(true);
         return [];
     }
 }
